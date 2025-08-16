@@ -1,0 +1,7 @@
+== historical_etf_data
+For my personal interest I am collecting the historical 10-top positions in selected ETFs.
+I was interested in the past how the positions change over time and was not able to find it somewhere.
+If you are interested to create some nice visualization I am interested to hear of.
+If you find a place where I can find that information, please let me know.
+
+There is no guarantee that the collected data is correct.
