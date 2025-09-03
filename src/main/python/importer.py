@@ -12,7 +12,7 @@ def read_csv(filename):
         reader = csv.DictReader(file)
         print(f"--- Reading '{filename}' ---")
         for row in reader:
-            print(row)
+            print(row['Standort'])
 
 if __name__ == "__main__":
     # Check for filename argument
