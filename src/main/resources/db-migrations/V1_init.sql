@@ -32,4 +32,6 @@ CREATE TABLE holdings (
                          FOREIGN KEY (stock_id) REFERENCES stocks(id)
 );
 
-select * from stocks
+insert into etfs (fond_name, isin) VALUES ('xyt', '123');
+insert into valuation_dates (valuation_datetime) values ('2025-05-01');
+commit
