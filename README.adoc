@@ -5,3 +5,11 @@ If you are interested to create some nice visualization I am interested to hear 
 If you find a place where I can find that information, please let me know.
 
 There is no guarantee that the collected data is correct.
+
+== Using
+
+There is a database which has all the data in it.
+You can query the database.
+
+* starting the database - `docker-compose up`
+* open db connection and execute ddl from src/main/resources/db-migrations
