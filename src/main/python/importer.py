@@ -47,11 +47,18 @@ def readStocks(filename):
         stockName = stock['stockName']
         countryName = stock['countryName']
         isin = uuid.uuid4()
-        print(f"INSERT INTO holdings (stock_name, country_id, isin) VALUES ('{stockName}', (select id from countries where countryname='{countryName}'), '{isin}');")
+        print(f"INSERT INTO stocks (stock_name, country_id, isin) VALUES ('{stockName}', (select id from countries where countryname='{countryName}'), '{isin}');")
 
 def createValuationDate(valuationDate):
     """Create new valuadtionDate if it doesn't exist."""
     print(f"insert into valuation_dates (valuation_datetime) values ('{valuationDate}');")
+
+def createFond(fondName):
+    """Create new valuadtionDate if it doesn't exist."""
+    isin = uuid.uuid4()
+    print(f"insert into etfs (fond_name, isin) values ('{fondName}', '{isin}');")
+
+
 
 def readHoldings(filename, etfName, valuationDate):
     """Read and print the contents of a CSV file."""
@@ -103,3 +110,5 @@ if __name__ == "__main__":
                 readHoldings(csv_file, etf_name, valuation_date)
             case "createvaluationdate":
                 createValuationDate(valuation_date)
+            case "createfond":
+                createFond(etf_name)
