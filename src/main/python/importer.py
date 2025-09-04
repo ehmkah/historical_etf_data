@@ -49,7 +49,11 @@ def readStocks(filename):
         isin = uuid.uuid4()
         print(f"INSERT INTO holdings (stock_name, country_id, isin) VALUES ('{stockName}', (select id from countries where countryname='{countryName}'), '{isin}');")
 
-def readHoldings(filename):
+def createValuationDate(valuationDate):
+    """Create new valuadtionDate if it doesn't exist."""
+    print(f"insert into valuation_dates (valuation_datetime) values ('{valuationDate}');")
+
+def readHoldings(filename, etfName, valuationDate):
     """Read and print the contents of a CSV file."""
     if not os.path.isfile(filename):
         print(f"Error: File '{filename}' not found.")
@@ -67,29 +71,35 @@ def readHoldings(filename):
             if countryName is not None and anlageKlasse == 'Aktien':
                 countryName = countryName.strip()
                 if countryName:
-                    values.append({"stockName" : stockName, "allocationInPercentage" : allocationInPercentage})
+                    values.append({"stockName" : stockName,
+                                   "allocationInPercentage" : allocationInPercentage})
 
     for stock in values:
         stockName=stock['stockName']
+
         allocationInPercentage = stock['allocationInPercentage'].replace(",", ".")
         stockQuery = f"(select id from stocks where stock_name='{stockName}' LIMIT 1)"
-        print(f"INSERT INTO holdings (valuation_date_id, etf_id, stock_id, allocation_percentage) VALUES (1, 1, {stockQuery}, {allocationInPercentage});")
-
-
+        etfQuery = f"(select id from etfs where fond_name='{etfName}' LIMIT 1)"
+        valuationDateQuery = f"(select id from valuation_dates where valuation_datetime='{valuationDate}' LIMIT 1)"
+        print(f"INSERT INTO holdings (valuation_date_id, etf_id, stock_id, allocation_percentage) VALUES ({valuationDateQuery}, {etfQuery}, {stockQuery}, {allocationInPercentage});")
 
 
 if __name__ == "__main__":
     # Check for filename argument
-    if len(sys.argv) < 3:
-        print("Usage: python read_csv.py <filename.csv>")
+    if len(sys.argv) < 5:
+        print("Usage: python read_csv.py <type> <filename.csv> <etf_name> <valuation_date>")
         sys.exit(1)
 
-    csv_file = sys.argv[1]
-    type = sys.argv[2]
+    type = sys.argv[1]
+    csv_file = sys.argv[2]
+    etf_name = sys.argv[3]
+    valuation_date = sys.argv[4]
     match type.lower():
             case "countries":
                 readCountries(csv_file)
             case "stocks":
                 readStocks(csv_file)
             case "holdings":
-                readHoldings(csv_file)
+                readHoldings(csv_file, etf_name, valuation_date)
+            case "createvaluationdate":
+                createValuationDate(valuation_date)
