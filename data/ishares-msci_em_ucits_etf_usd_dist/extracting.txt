@@ -1,0 +1,12 @@
+source : https://www.ishares.com/de/privatanleger/de/produkte/251857/
+
+python3 importer.py createFond ../../../data/ishares-msci_em_ucits_etf_usd_dist/2025-06-30.csv ishares-msci_em_ucits_etf_usd_dist 2025-06-30
+
+python3 importer.py createValuationDate ../../../data/ishares-msci_em_ucits_etf_usd_dist/2025-06-30.csv ishares-msci_em_ucits_etf_usd_dist 2025-06-30
+
+python3 importer.py countries ../../../data/ishares-msci_em_ucits_etf_usd_dist/2025-06-30.csv ishares-msci_em_ucits_etf_usd_dist 2025-06-30 > countries.sql
+
+python3 importer.py stocks ../../../data/ishares-msci_em_ucits_etf_usd_dist/2025-06-30.csv ishares-msci_em_ucits_etf_usd_dist 2025-06-30 >stocks.sql
+
+python3 importer.py holdings ../../../data/ishares-msci_em_ucits_etf_usd_dist/2025-06-30.csv ishares-msci_em_ucits_etf_usd_dist 2025-06-30 >holdings.sql
+
