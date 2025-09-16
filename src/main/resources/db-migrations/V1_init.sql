@@ -1,11 +1,11 @@
 CREATE TABLE countries (
                            id SERIAL PRIMARY KEY,
-                           countryname VARCHAR(100) NOT NULL
+                           countryname text NOT NULL UNIQUE
 );
 
 CREATE TABLE etfs (
                      id SERIAL PRIMARY KEY,
-                     fond_name TEXT NOT NULL,
+                     fond_name TEXT NOT NULL UNIQUE ,
                      isin TEXT NOT NULL UNIQUE
 );
 CREATE TABLE stocks (
@@ -26,12 +26,16 @@ CREATE TABLE holdings (
                          valuation_date_id INTEGER NOT NULL,
                          etf_id INTEGER NOT NULL,
                          stock_id INTEGER NOT NULL,
-                         allocation_percentage DECIMAL(5,2) NOT NULL, -- e.g., 5.25 = 5.25%
+                         allocation_percentage DECIMAL(5,2) NOT NULL,
                          FOREIGN KEY (valuation_date_id) REFERENCES valuation_dates(id),
                          FOREIGN KEY (etf_id) REFERENCES etfs(id),
                          FOREIGN KEY (stock_id) REFERENCES stocks(id)
 );
 
-insert into etfs (fond_name, isin) VALUES ('xyt', '123');
-insert into valuation_dates (valuation_datetime) values ('2025-05-01');
+drop table holdings;
+drop table stocks;
+drop table countries;
+drop table valuation_dates;
+drop table etfs;
+drop table countries;
 commit

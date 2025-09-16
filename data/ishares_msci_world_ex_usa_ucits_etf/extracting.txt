@@ -1,0 +1,12 @@
+source : https://www.ishares.com/de/privatanleger/de/produkte/340748/
+
+python3 importer.py createFond ../../../data/ishares_msci_world_ex_usa_ucits_etf/2025-06-30.csv ishares_msci_world_ex_usa_ucits_etf 2025-06-30
+
+python3 importer.py createEtf ../../../data/ishares_msci_world_ex_usa_ucits_etf/2025-06-30.csv ishares_msci_world_ex_usa_ucits_etf 2025-06-30
+
+python3 importer.py createValuationDate ../../../data/ishares_msci_world_ex_usa_ucits_etf/2025-06-30.csv ishares_msci_world_ex_usa_ucits_etf 2025-06-30
+
+python3 importer.py stocks ../../../data/ishares_msci_world_ex_usa_ucits_etf/2025-06-30.csv ishares_msci_world_ex_usa_ucits_etf 2025-06-30 >stocks.sql
+
+python3 importer.py holdings ../../../data/ishares_msci_world_ex_usa_ucits_etf/2025-06-30.csv ishares_msci_world_ex_usa_ucits_etf 2025-06-30 >holdings.sql
+

@@ -22,7 +22,7 @@ def readCountries(filename):
                                 values.add(val)
 
     for countryName in sorted(values):
-        print(f"INSERT INTO countries (countryname) VALUES ('{countryName}');");
+        print(f"INSERT INTO countries (countryname) VALUES ('{countryName}') ON CONFLICT (countryname) DO NOTHING;");
 
 def readStocks(filename):
     """Read and print the contents of a CSV file."""
@@ -56,7 +56,7 @@ def createValuationDate(valuationDate):
 def createFond(fondName):
     """Create new valuadtionDate if it doesn't exist."""
     isin = uuid.uuid4()
-    print(f"insert into etfs (fond_name, isin) values ('{fondName}', '{isin}');")
+    print(f"insert into etfs (fond_name, isin) values ('{fondName}', '{isin}') ;")
 
 
 
