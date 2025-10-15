@@ -3,7 +3,7 @@ import sys
 import os
 import uuid
 
-def readCountries(filename):
+def createCountries(filename):
     """Read and print the contents of a CSV file."""
     if not os.path.isfile(filename):
         print(f"Error: File '{filename}' not found.")
@@ -24,7 +24,7 @@ def readCountries(filename):
     for countryName in sorted(values):
         print(f"INSERT INTO countries (countryname) VALUES ('{countryName}') ON CONFLICT (countryname) DO NOTHING;");
 
-def readStocks(filename):
+def createStocks(filename):
     """Read and print the contents of a CSV file."""
     if not os.path.isfile(filename):
         print(f"Error: File '{filename}' not found.")
@@ -56,11 +56,11 @@ def createValuationDate(valuationDate):
 def createFond(fondName):
     """Create new valuadtionDate if it doesn't exist."""
     isin = uuid.uuid4()
-    print(f"insert into etfs (fond_name, isin) values ('{fondName}', '{isin}') ;")
+    print(f"insert into etfs (fond_name, isin) values ('{fondName}', '{isin}') ON CONFLICT (fond_name) DO NOTHING;")
 
 
 
-def readHoldings(filename, etfName, valuationDate):
+def createHoldings(filename, fundName, valuationDate):
     """Read and print the contents of a CSV file."""
     if not os.path.isfile(filename):
         print(f"Error: File '{filename}' not found.")
@@ -86,7 +86,7 @@ def readHoldings(filename, etfName, valuationDate):
 
         allocationInPercentage = stock['allocationInPercentage'].replace(",", ".")
         stockQuery = f"(select id from stocks where stock_name='{stockName}' LIMIT 1)"
-        etfQuery = f"(select id from etfs where fond_name='{etfName}' LIMIT 1)"
+        etfQuery = f"(select id from etfs where fond_name='{fundName}' LIMIT 1)"
         valuationDateQuery = f"(select id from valuation_dates where valuation_datetime='{valuationDate}' LIMIT 1)"
         print(f"INSERT INTO holdings (valuation_date_id, etf_id, stock_id, allocation_percentage) VALUES ({valuationDateQuery}, {etfQuery}, {stockQuery}, {allocationInPercentage});")
 
@@ -103,11 +103,11 @@ if __name__ == "__main__":
     valuation_date = sys.argv[4]
     match type.lower():
             case "countries":
-                readCountries(csv_file)
+                createCountries(csv_file)
             case "stocks":
-                readStocks(csv_file)
+                createStocks(csv_file)
             case "holdings":
-                readHoldings(csv_file, etf_name, valuation_date)
+                createHoldings(csv_file, etf_name, valuation_date)
             case "createvaluationdate":
                 createValuationDate(valuation_date)
             case "createfond":
